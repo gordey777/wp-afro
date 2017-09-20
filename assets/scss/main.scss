@@ -19,6 +19,7 @@ body {
   line-height: $base-line-height;
 
   min-width: 320px;
+  min-height: 100%;
 
   transition: $base-transition;
 
@@ -72,25 +73,42 @@ picture {
   max-width: 100%;
   margin: 0;
 }
+
 .wrapper {
   position: relative;
 
   width: 100%;
+  max-width: 1920px;
   height: auto !important;
-  height: 100%;
-  min-height: 100%;
+  //height: 100%;
+  min-height: calc(100% - $footer);
   margin: 0 auto;
+
+  background: url(../img/section-bg.jpg) no-repeat center bottom;
+  background-size: cover;
 
   @extend .clearfix;
 }
+
+.container-fluid,
 .container {
   position: relative;
 
-  max-width: $width;
+  max-width: 1031px;
+  &.white-bg {
+    background-color: rgba(#fff, .9);
+  }
+  &.slider_wrapp {
+    padding: 0;
+  }
 }
 
 header {
-  background-color: $gray-light;
+  position: relative;
+  z-index: 1;
+
+  background: url(../img/header-bg.png) no-repeat center top;
+  background-size: cover;
   .logo {
     display: block;
     img {
@@ -98,22 +116,142 @@ header {
     }
   }
 }
-nav {
-  ul {
-    @extend .justify-child;
-    @extend .clearfix;
-    li {
-      display: inline-block;
-    }
+
+// nav {
+//   ul {
+//     @extend .justify-child;
+//     @extend .clearfix;
+//     li {
+//       display: inline-block;
+//     }
+//   }
+//   .headnav {
+//     font-size: 100%;
+//   }
+// }
+
+
+.nav__header {
+  margin: 0 auto;
+  padding: 0;
+
+  text-align: center;
+  vertical-align: top;
+
+  background: url(../img/nav-bg.jpg) no-repeat center center;
+  background-size: cover;
+}
+
+.headnav {
+  display: inline-block;
+
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+
+  text-align: center;
+  vertical-align: top;
+  li {
+    outline: 0;
   }
-  .headnav {
-    font-size: 100%;
+  > li {
+    position: relative;
+
+    display: inline-block;
+    float: left;
+
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+    &:first-child {
+      margin-left: auto;
+    }
+    &:last-child {
+      margin-right: auto;
+    }
+    > a {
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 1;
+
+      display: inline-block;
+
+      width: 100%;
+      margin: 0;
+      padding: 16px 18px;
+
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      color: #fff;
+      &:hover {
+        background-color: $red;
+      }
+    }
+    .sub-menu {
+      position: absolute;
+      z-index: 1;
+      top: 100%;
+      left: 0;
+
+      overflow: hidden;
+
+      min-width: 100%;
+      max-height: 0;
+
+      transition: max-height .8s ease, opacity 1.1s;
+
+      opacity: 0;
+      li {
+        width: 100%;
+        a {
+          font-size: 15px;
+          font-weight: bold;
+          line-height: 1;
+
+          display: inline-block;
+
+          width: 100%;
+          padding: 16px 18px;
+
+          text-align: center;
+          text-decoration: none;
+
+          color: #fff;
+          background-color: $red;
+          &:hover {
+            background-color: $red-dark;
+          }
+        }
+      }
+    }
+    &:hover {
+      a {
+        background-color: $red;
+      }
+      .sub-menu {
+        max-height: 1000px;
+
+        opacity: 1;
+      }
+    }
+    &.current-menu-item {
+      a {
+        color: $red;
+      }
+    }
   }
 }
 
 section {
-  padding: 0 0 $footer;
+  //padding: 0 0 $footer;
 }
+
+
 article {
   @extend .clearfix;
 }
@@ -121,14 +259,56 @@ article {
   @extend .clearfix;
 }
 
+.slider_wrapp {
+  .slide {
+    position: relative;
+    .slide-cont {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      bottom: 0;
+      left: 0;
 
-footer {
-  height: $footer;
-  margin: $footer_margin auto 0;
-
-  background-color: $gray-light;
+      width: 30%;
+      .slide-btn {
+        //
+      }
+    }
+  }
 }
 
+
+
+.certificate_wrapp {
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  border-top: 1px solid #cec7bd;
+}
+
+.home-section {
+  //background: url(../img/section-bg.jpg) no-repeat center center;
+  //background-size: cover;
+}
+
+
+footer {
+  max-width: 1920px;
+  height: $footer;
+  margin: 0 auto;
+
+  background: url(../img/footer-bg.jpg) no-repeat center center;
+  background-size: cover;
+}
+
+@media (min-width: 1050px) {
+  .container-fluid,
+  .container {
+    width: 1031px;
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+}
 
 @import 'fonts/font_fontawesome';
 @import 'fonts/font_roboto';
