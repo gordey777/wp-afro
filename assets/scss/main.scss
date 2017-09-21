@@ -149,23 +149,31 @@ header {
   }
   .socials {
     li {
+      font-size: 14px;
+
       display: inline-block;
 
       margin-left: 3px;
       a {
-        font-size: 14px;
+        font-size: 1em;
         line-height: 25px;
 
         display: inline-block;
+        overflow: hidden;
 
         width: 25px;
         height: 25px;
 
+        transition: all .15s;
         text-align: center;
         vertical-align: middle;
 
         color: #fff;
         border-radius: 50%;
+        &:hover {
+          font-size: 1.6em;
+          //color: #ddd;
+        }
       }
     }
   }
@@ -332,24 +340,26 @@ header {
           color: #fff;
           background-color: $red;
           &:hover {
+            color: #fff;
             background-color: $red-dark;
           }
         }
       }
     }
+    &.current-menu-item {
+      a {
+        color: $red;
+      }
+    }
     &:hover {
       a {
+        color: #fff;
         background-color: $red;
       }
       .sub-menu {
         max-height: 1000px;
 
         opacity: 1;
-      }
-    }
-    &.current-menu-item {
-      a {
-        color: $red;
       }
     }
   }
