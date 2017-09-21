@@ -1,0 +1,13 @@
+$rb-font-path: '../fonts' !default;
+
+@font-face {
+  font-family: 'PFLiberaPro-Liberissima';
+  font-weight: 400;
+  font-style: normal;
+
+  src: url('#{$rb-font-path}/PFLiberaPro-Liberissima.eot');
+  src: local('PFLiberaPro-Liberissima'),
+  local('PFLiberaPro-Liberissima'),
+  url('#{$rb-font-path}/PFLiberaPro-Liberissima.eot') format('embedded-opentype'),
+  url('#{$rb-font-path}/PFLiberaPro-Liberissima.woff') format('woff');
+}

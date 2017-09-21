@@ -7,10 +7,18 @@
 @import 'import/mixin';
 @import 'import/wordpress';
 
+@import 'owl.carousel';
+@import 'owl.theme.default';
 @import 'grid/bootstrap';
 @import 'grid/bootstrap-theme';
 
 @import 'super_sprite';
+
+@import 'fonts/pfliberapro';
+@import 'fonts/font_fontawesome';
+@import 'fonts/font_roboto';
+@import 'base64';
+@import 'import/print';
 
 body {
   font-family: $base-font-family;
@@ -28,6 +36,10 @@ body {
 
   -webkit-font-smoothing: antialiased;
 }
+
+* {
+  vertical-align: middle;
+}
 h1,
 h2,
 h3,
@@ -42,7 +54,7 @@ h6 {
 }
 p,
 pre {
-  margin: 0 0 $small-spacing;
+  margin: 0 0 22px;
 }
 a {
   transition: $base-transition;
@@ -106,13 +118,109 @@ picture {
 header {
   position: relative;
   z-index: 1;
+  //height: 250px;
 
   background: url(../img/header-bg.png) no-repeat center top;
-  background-size: cover;
+  background-size: auto 190px;
   .logo {
+    position: relative;
+
     display: block;
     img {
       max-width: 100%;
+    }
+    .logo-title {
+      font-family: 'PFLiberaPro-Liberissima';
+      font-size: 40px;
+
+      position: absolute;
+      top: 40%;
+      left: 160px;
+
+      display: inline-block;
+
+      width: auto;
+
+      white-space: nowrap;
+      text-transform: uppercase;
+
+      color: #291300;
+    }
+  }
+  .socials {
+    li {
+      display: inline-block;
+
+      margin-left: 3px;
+      a {
+        font-size: 14px;
+        line-height: 25px;
+
+        display: inline-block;
+
+        width: 25px;
+        height: 25px;
+
+        text-align: center;
+        vertical-align: middle;
+
+        color: #fff;
+        border-radius: 50%;
+      }
+    }
+  }
+  .lang_menu {
+    float: right;
+    li {
+      display: inline-block;
+      float: left;
+
+      margin-right: 2px;
+    }
+  }
+  .head_top {
+    padding-top: 15px;
+    padding-bottom: 20px;
+  }
+}
+
+
+.search_wrapp {
+  display: inline-block;
+  .search {
+    position: relative;
+
+    display: inline-block;
+
+    height: 30px;
+    .search-input {
+      line-height: 30px;
+
+      display: inline-block;
+
+      height: 30px;
+      margin: 0;
+      padding: 0 10px;
+
+      border-radius: 30px;
+    }
+    .search-submit {
+      line-height: 30px;
+
+      position: absolute;
+      top: 1px;
+      right: 0;
+
+      width: 20px;
+      height: 30px;
+      margin: 0;
+      //bottom: 0;
+      padding: 0;
+
+      vertical-align: middle;
+
+      border: 0;
+      background-color: transparent;
     }
   }
 }
@@ -247,12 +355,48 @@ header {
   }
 }
 
+
+.green-title {
+  font-size: 25px;
+  font-weight: bold;
+  //height: 40px;
+  line-height: 1.1;
+
+  position: relative;
+
+  display: inline-block;
+
+  padding-top: 15px;
+  //padding-top: 14px;
+  padding-left: 20px;
+
+  vertical-align: bottom;
+
+  color: $green;
+  //border-left: 7px solid $green;
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: inline-block;
+
+    width: 7px;
+    height: 40px;
+
+    content: '';
+
+    background-color: $green;
+  }
+}
+
 section {
   //padding: 0 0 $footer;
 }
 
 
 article {
+  //padding-top: 20px;
   @extend .clearfix;
 }
 .looper {
@@ -260,6 +404,9 @@ article {
 }
 
 .slider_wrapp {
+  margin-bottom: 40px;
+
+  border-bottom: 18px solid $green;
   .slide {
     position: relative;
     .slide-cont {
@@ -277,13 +424,69 @@ article {
   }
 }
 
+.slider {
+  position: relative;
+  .owl-nav {
+    position: absolute;
+    bottom: 70px;
+    left: 24px;
+
+    height: 0;
+    margin: 0;
+    padding: 0;
+    .owl-prev,
+    .owl-next {
+      margin: 0;
+      padding: 0;
+
+      transition: all .3s;
+
+      background-color: transparent;
+      &:before {
+        font-family: 'Fontawesome';
+        font-size: 50px;
+
+        display: inline;
+
+        transition: all .3s;
+
+        color: #333;
+      }
+      &:hover {
+        opacity: .5;
+      }
+    }
+    .owl-prev {
+      margin-right: 30px;
+      &:before {
+        content: '\f104';
+      }
+    }
+    .owl-next {
+      &:before {
+        content: '\f105';
+      }
+    }
+  }
+}
 
 
 .certificate_wrapp {
   padding-top: 30px;
-  padding-bottom: 30px;
+  //padding-bottom: 30px;
 
   border-top: 1px solid #cec7bd;
+  .certificate_ithem {
+    overflow: hidden;
+
+    margin-bottom: 30px;
+    img {
+      width: auto;
+      min-width: 100%;
+      height: auto;
+      min-height: 100%;
+    }
+  }
 }
 
 .home-section {
@@ -302,6 +505,10 @@ footer {
 }
 
 @media (min-width: 1050px) {
+  .row.slider_wrapp {
+    margin-right: -25px;
+    margin-left: -25px;
+  }
   .container-fluid,
   .container {
     width: 1031px;
@@ -309,8 +516,3 @@ footer {
     padding-left: 25px;
   }
 }
-
-@import 'fonts/font_fontawesome';
-@import 'fonts/font_roboto';
-@import 'base64';
-@import 'import/print';
