@@ -1,0 +1,149 @@
+/* =============================================================================
+  MENU TOGGLE SWITCHES
+============================================================================= */
+
+// vars
+
+$button-width: 50px;
+$button-height: 40px;
+$bar-thickness: 4px;
+$button-pad: 10px;
+$button-trans-delay: 1s;
+$humb-color: rgba(#fff, 1);
+$humb-color-hov: darken($humb-color, 0);
+//$humb-color-hov: $humb-color;
+$humb-bg-color: rgba(#000, .0);
+
+
+.humb-toggle-switch {
+  font-size: 0;
+
+  position: absolute;
+  z-index: 98;
+  top: 0;
+  right: 15px;
+
+  display: block;
+  overflow: hidden;
+
+  width: $button-width;
+  height: $button-height;
+  margin: 0;
+  padding: 0;
+
+  cursor: pointer;
+  transition: background $button-trans-delay;
+  transition: transform $button-trans-delay;
+  transition: left $button-trans-delay;
+  transition: right $button-trans-delay;
+  text-indent: -9999px;
+
+  border: none;
+  border-radius: none;
+  box-shadow: none;
+
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  &:focus {
+    outline: none;
+  }
+  span {
+    position: absolute;
+    top: ($button-height / 2) - ($bar-thickness / 2);
+    right: $button-pad;
+    left: $button-pad;
+
+    display: block;
+
+    height: $bar-thickness;
+
+    border-radius: 4px;
+    background: $humb-color;
+    &:before,
+    &:after {
+      position: absolute;
+      left: 0;
+
+      display: block;
+
+      width: 100%;
+      height: $bar-thickness;
+
+      content: '';
+
+      border-radius: 4px;
+      background-color: $humb-color;
+    }
+    &:before {
+      top: -(($button-height / 2) - ($bar-thickness / 2) - $button-pad);
+    }
+    &:after {
+      bottom: -(($button-height / 2) - ($bar-thickness / 2) - $button-pad);
+    }
+  }
+  &:hover {
+    //transform: rotate(180deg);
+    span {
+      background-color: $humb-color-hov;
+      &:before,
+      &:after {
+        background-color: $humb-color-hov;
+      }
+    }
+  }
+}
+
+
+
+.humb-toggle-switch__htx {
+  //transition: right .3s;
+  background-color: $humb-bg-color;
+  span {
+    transition: background 0 $button-trans-delay;
+    &:before,
+    &:after {
+      transition-delay: $button-trans-delay, 0;
+      transition-duration: $button-trans-delay, $button-trans-delay;
+    }
+    &:after {
+      transition-property: bottom, transform;
+    }
+    &:before {
+      transition-property: top, transform;
+    }
+  }
+}
+
+.humb-toggle-switch__htx.active {
+  //left: calc(100% - 15px - 44px);
+  /* The element to apply the animation to */
+  //animation-name: example;
+  //animation-duration: 1s;
+  //animation-iteration-count: 1;
+  //animation-direction: reverse;
+  //right: 500px;
+  background-color: darken($humb-bg-color, 20%);
+  span {
+    background: none;
+    &:before {
+      top: 0;
+
+      transform: rotate(315deg);
+    }
+    &:after {
+      bottom: 0;
+
+      transform: rotate(405deg);
+    }
+    &:before,
+    &:after {
+      transition-delay: 0, $button-trans-delay;
+    }
+  }
+}
+@media (min-width: 768px) {
+  .humb-toggle-switch {
+    display: none;
+  }
+}

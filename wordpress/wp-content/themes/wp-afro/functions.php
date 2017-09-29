@@ -209,6 +209,9 @@ if (function_exists('register_sidebar')) {
 function wpeExcerpt10($length) {
   return 10;
 }
+function wpeExcerpt12($length) {
+  return 12;
+}
 function wpeExcerpt20($length) {
   return 20;
 }
@@ -234,13 +237,13 @@ function wpeExcerpt($length_callback = '', $more_callback = '') {
 
 //  Custom View Article link to Post
 //  RU: Добавляем "Читать дальше" к обрезанным записям
-/*
+
 function html5_blank_view_article($more) {
   global $post;
-  return '... <!-- noindex --><a rel="nofollow" class="view-article" href="' . get_permalink($post->ID) . '">' . __('View Article', 'wpeasy') . '</a><!-- /noindex -->';
+  return '...';
 }
 add_filter('excerpt_more', 'html5_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts
-*/
+
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
 function my_wp_nav_menu_args($args = '') {
@@ -424,10 +427,11 @@ function single_result() {
 function easy_breadcrumbs() {
 
   // Settings
-  $separator          = ' &raquo; ';
+  $separator          = ' / ';
   $breadcrums_id      = 'breadcrumbs';
   $breadcrums_class   = 'breadcrumbs';
   $home_title         = 'Главная';
+
 
   // If you have any custom post types with custom taxonomies, put the taxonomy name below (e.g. product_cat)
   $custom_taxonomy    = 'categories';
@@ -442,7 +446,7 @@ function easy_breadcrumbs() {
     echo '<ul id="' . $breadcrums_id . '" class="' . $breadcrums_class . '">';
 
     // Home page
-    echo '<li class="item-home"><a class="bread-link bread-home" href="' . get_home_url() . '" title="' . $home_title . '">' . $home_title . '</a></li>';
+    echo '<li class="item-home"><a class="bread-link bread-home" href="' . get_home_url() . '" title="' . $home_title . '"><i class="fa fa-home"></i></a></li>';
     echo '<li class="separator separator-home"> ' . $separator . ' </li>';
 
         if ( is_archive() && !is_tax() && !is_category() && !is_tag() ) {
@@ -680,11 +684,99 @@ function disable_emojicons_tinymce( $plugins ) {
   }
 }
 
+function post_is_in_descendant_category( $cats, $_post = null ){
+  foreach ( (array) $cats as $cat ) {
+    // get_term_children() accepts integer ID only
+    $descendants = get_term_children( (int) $cat, 'category');
+    if( $descendants && in_category( $descendants, $_post ) )
+      return true;
+  }
+  return false;
+}
+
 
 
 function filter_ptags_on_images($content){
     return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 add_filter('the_content', 'filter_ptags_on_images');
+
+
+function true_load_posts(){
+  $args = unserialize(stripslashes($_POST['query']));
+  $args['paged'] = $_POST['page'] + 1;
+  $args['post_status'] = 'publish';
+  $q = new WP_Query($args);
+  if( $q->have_posts() ):
+    while($q->have_posts()): $q->the_post();
+
+  @include 'pagination-ajax.php';
+
+
+
+    endwhile;
+  endif;
+  wp_reset_postdata();
+  die();
+}
+
+
+add_action('wp_ajax_loadmore', 'true_load_posts');
+add_action('wp_ajax_nopriv_loadmore', 'true_load_posts');
+
+
+
+
+// add_action('wp_ajax_my_repeater_show_more', 'my_repeater_show_more');
+
+//   add_action('wp_ajax_nopriv_my_repeater_show_more', 'my_repeater_show_more');
+
+//   function my_repeater_show_more() {
+
+
+//     // validate the nonce
+//     // if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'my_repeater_field_nonce')) {
+//     //   exit;
+//     // }
+//     // make sure we have the other values
+//     if (!isset($_POST['post_id']) || !isset($_POST['offset'])) {
+//       return;
+//     }
+//     $show = 1; // how many more to show
+//     $start = $_POST['offset'];
+//     $end = $start+$show;
+//     $post_id = $_POST['post_id'];
+//     // use an object buffer to capture the html output
+//     // alternately you could create a varaible like $html
+//     // and add the content to this string, but I find
+//     // object buffers make the code easier to work with
+//     ob_start();
+
+
+//     if (have_rows('band_members', $post_id)) {
+//       $total = count(get_field('band_members', $post_id));;
+//       $count = 0;
+//               while(have_rows('band_members')) {
+//                 the_row();
+//                 @include 'pagination-acf-ajax.php';
+//             $count++;
+//             if ($count == $number) {
+
+//               break;
+//             }
+//           } // end while have rows
+//           } // end if have rows
+
+//   } // end function my_repeater_show_more
+
+
+
+
+
+
+
+
+
+
 
 ?>

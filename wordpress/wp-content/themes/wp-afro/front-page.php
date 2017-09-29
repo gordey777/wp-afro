@@ -2,7 +2,7 @@
 
   <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 <?php edit_post_link(); ?>
-    <section role="main" class="home-section">
+
 
       <article id="post-<?php the_ID(); ?>" <?php post_class(' container white-bg'); ?>>
 
@@ -18,11 +18,13 @@
                   <?php if ( !empty($image)) : ?>
                     <img src="<?php echo $image['url']; ?>" alt="">
                   <?php endif; ?>
-                  <div class="slide-cont">
+                  <div class="slide-cont col-md-5 col-sm-7 col-xs-12">
+                    <h2><?php the_sub_field('title'); ?></h2>
                     <?php the_sub_field('content'); ?>
+                    <span class="slide-date"><?php the_sub_field('date'); ?></span>
 
                     <?php  if ( !empty($link)) { ?>
-                      <a href="<?php the_sub_field('link'); ?>" class="slide-btn red_btn">Принять участие</a>
+                      <a href="<?php the_sub_field('link'); ?>" class="slide-btn red-btn">Принять участие</a>
                     <?php } ?>
 
                   </div>
@@ -42,13 +44,13 @@
 
           if ( !empty($front_video)) : ?>
           <div class="col-md-6 video-wrapp">
-              <iframe class="big-video" src="https://www.youtube.com/embed/<?php echo $front_video['vid']; ?>" width="100%" height="100%" frameborder="0" allowfullscreen=""></iframe>
+              <iframe class="yt_video" src="https://www.youtube.com/embed/<?php echo $front_video['vid']; ?>" width="100%" height="100%" frameborder="0" allowfullscreen=""></iframe>
             </div>
           <?php endif; ?>
 
-          <div class="clearfix"></div>
 
-
+        </div><!-- /.row -->
+        <div class="row sertificats">
           <?php if( have_rows('sertificats') ): ?>
             <div class="col-md-12">
               <h2 class="green-title">Сертификаты</h2>
@@ -70,12 +72,13 @@
             </div>
           <?php endif; ?>
 
+
         </div><!-- /.row -->
 
 
       </article>
       <!-- /.container -->
-    </section>
+
 
   <?php endwhile; endif; ?>
 

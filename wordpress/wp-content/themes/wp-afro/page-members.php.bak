@@ -1,0 +1,134 @@
+<?php /* Template Name: Members Page */ get_header(); ?>
+
+  <?php if (have_posts()): while (have_posts()) : the_post(); ?>
+    <?php edit_post_link(); ?>
+
+
+      <article id="post-<?php the_ID(); ?>" <?php post_class(' container white-bg'); ?>>
+        <div class="row">
+
+  <?php if (have_rows('band_members')) {
+
+    $total = count(get_field('members'));
+    ?>
+
+
+            <div class="members-wrapp col-md-12">
+              <?php
+              $number = 1; // the number of rows to show
+              $count = 0; // a counter
+              while(have_rows('band_members')) {
+                the_row(); ?>
+              <div class='looper row member'>
+
+                <a rel="nofollow" class="feature-img col-md-2 col-sm-4 col-xs-6" href="#" title="">
+                  <?php if ( has_post_thumbnail()) { ?>
+                    <img src="<?php echo the_post_thumbnail_url('medium'); ?>" title="<?php the_title(); ?>" alt="<?php the_title(); ?>" />
+                  <?php } else { ?>
+                    <img src="<?php echo catchFirstImage(); ?>" title="<?php the_title(); ?>" alt="<?php the_title(); ?>" />
+                  <?php } ?>
+                </a><!-- /post thumbnail -->
+                <div class="col-md-10 col-sm-8 col-xs-6">
+
+                  <h2 class="inner-title green-title">
+                    <?php the_sub_field('<title></title>'); ?>
+                  </h2>
+
+                  <div class="desc">
+                    <?php the_sub_field('desc'); ?>
+                  </div>
+                  <div class="green-btn down red">Подробнее</div>
+                </div>
+
+              </div><!-- /looper -->
+
+
+            <?php
+            $count++;
+            if ($count == $number) {
+
+              break;
+            }
+          } // end while have rows
+        ?>
+      </div>
+
+
+
+      <div id="my-repeater-show-more-link" class="red-btn down">Show More</div>
+      <!--
+        The JS that will do the AJAX request
+      -->
+      <script type="text/javascript">
+        var my_repeater_field_post_id = <?php echo $post->ID; ?>;
+        var my_repeater_field_offset = <?php echo $number; ?>;
+        //var my_repeater_field_nonce = '<?php echo wp_create_nonce('my_repeater_field_nonce'); ?>';
+        var my_repeater_ajax_url = '<?php echo site_url() ?>/wp-admin/admin-ajax.php';
+        var my_repeater_more = true;
+
+        function my_repeater_show_more() {
+
+          // make ajax request
+          jQuery.post(
+            my_repeater_ajax_url, {
+              // this is the AJAX action we set up in PHP
+              'action': 'my_repeater_show_more',
+              'post_id': my_repeater_field_post_id,
+              'offset': my_repeater_field_offset,
+              //'nonce': my_repeater_field_nonce
+            },
+            function (json) {
+
+              jQuery('.members-wrapp').append(json['content']);
+              // update offset
+              my_repeater_field_offset = json['offset'];
+              // see if there is more, if not then hide the more link
+              if (!json['more']) {
+                // this ID must match the id of the show more link
+                jQuery('#my-repeater-show-more-link').css('display', 'none');
+              }
+            },
+            'json'
+          );
+        }
+
+  jQuery(function($) {
+    $('#my-repeater-show-more-link').click(function() {
+      $(this).text('Загружаю...');
+      var data = {
+        'action': 'loadmore',
+        'query': true_posts,
+        'page': current_page
+      };
+      $.ajax({
+        url: ajaxurl,
+        data: data,
+        type: 'POST',
+        success: function(data) {
+          if (data) {
+            $('#true_loadmore').text('еще новости').before(data);
+            current_page++;
+            if (current_page == max_pages) $("#true_loadmore").remove();
+          } else {
+            $('#true_loadmore').remove();
+          }
+        }
+      });
+    });
+  });
+
+
+
+      </script>
+    <?php
+  } // end if have_rows
+ ?>
+        </div><!-- /.row -->
+
+      </article>
+      <!-- /.container -->
+
+
+  <?php endwhile; endif; ?>
+
+<?php get_footer(); ?>

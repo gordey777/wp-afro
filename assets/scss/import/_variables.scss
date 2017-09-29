@@ -1,7 +1,7 @@
 // Font Sizes
 $base-font-size: 16px;
 $em-base: $base-font-size;
-$base-font-family: 'Roboto Condensed', open sans;
+$base-font-family: 'Roboto Condensed', sans-serif;
 $heading-font-family: $base-font-family;
 
 // font weight
@@ -16,12 +16,12 @@ $fthin: 200; // 200 Light or Thin
 $fulight: 100; // 100 Extra Light or Ultra Light
 
 // Line height
-$base-line-height: 1.4;
+$base-line-height: 1.1;
 $heading-line-height: 1.2;
 
 // Other Sizes
-//$width: 1034px;
-$footer: 95px;
+$width: 1031px;
+$footer: 50px;
 $footer_margin: $footer - 2 * $footer;
 $base-border-radius: 3px;
 $base-spacing: $base-line-height * 1em;
@@ -30,11 +30,12 @@ $base-z-index: 0;
 
 // Colors
 $orange: orange;
+//$yellow: orange;
 $red: #ef444a;
 $red-dark: #291300;
+$green: #3faf62;
 $blue: #477dca;
-$green: #41b064;
-$gray-medium: #999;
+$gray-medium: #747474;
 $gray-dark: #333;
 $gray-light: #ddd;
 
